@@ -9,7 +9,7 @@ export default function InvitationView() {
   return (
     <div className="bg-[#fbf7ee] font-sans">
       {/* Section 1 – title, hero photo, date & location */}
-      <section className="flex min-h-screen flex-col items-center justify-center text-center">
+      <section className="flex h-screen flex-col items-center justify-center text-center">
         <FadeIn delay={0.1}>
           <div className="mb-2">
             <h1 className="text-[4.5rem] sm:text-[7rem] md:text-[9rem] text-[#222222] mb-4">
@@ -27,7 +27,7 @@ export default function InvitationView() {
           />
         </FadeIn>
         <FadeIn delay={0.5}>
-          <div className="flex flex-col items-center gap-2 w-[80%]">
+          <div className="flex flex-col items-center gap-2">
             <p className="text-[#222222] text-lg">Agust 29, 2026</p>
             <p className="text-[#222222] text-lg">BALI, INDONESIA</p>
           </div>
