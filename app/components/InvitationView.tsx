@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Countdown from "./Countdown";
 import Wishes from "./Wishes";
@@ -59,13 +59,85 @@ function CopyButton({ value }: { value: string }) {
 }
 
 export default function InvitationView() {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0.5;
+    audio.play().catch(() => {
+      setIsPlaying(false);
+    });
+  }, []);
+
+  const toggleMusic = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div className="bg-[#fbf7ee] font-sans">
+      {/* Background Music */}
+      <audio
+        ref={audioRef}
+        src="/Nyoman Paul, Andi Rianto  The Way You Look At Me (Official Music Video).mp3"
+        loop
+      />
+
+      {/* Floating music toggle */}
+      <button
+        onClick={toggleMusic}
+        aria-label={isPlaying ? "Pause music" : "Play music"}
+        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-colors"
+      >
+        {isPlaying ? (
+          /* Pause icon */
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="text-[#444444]"
+          >
+            <rect x="6" y="4" width="4" height="16" rx="1" />
+            <rect x="14" y="4" width="4" height="16" rx="1" />
+          </svg>
+        ) : (
+          /* Play icon */
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="text-[#444444]"
+          >
+            <polygon points="5,3 19,12 5,21" />
+          </svg>
+        )}
+      </button>
       {/* Section 1 – title, hero photo, date & location */}
       <section className="relative flex h-screen flex-col items-center justify-center text-center px-[10%] pt-[10%] pb-[12%]">
         <FadeIn delay={0.1}>
           <div className="mb-2">
-            <h1 className="text-[4.5rem] sm:text-[7rem] md:text-[9rem] text-[#222222] mb-4">
+            <p
+              className="text-base tracking-widest text-[#888888] italic"
+              style={{ marginBottom: 0 }}
+            >
+              We&apos;re getting married
+            </p>
+            <h1
+              className="text-[4.5rem] sm:text-[5rem] md:text-[6rem] text-[#222222]"
+              style={{ marginTop: "-0.75rem", lineHeight: 1.1 }}
+            >
               Bagas dan Yoni
             </h1>
           </div>
@@ -82,7 +154,6 @@ export default function InvitationView() {
         <FadeIn delay={0.5}>
           <div className="flex flex-col items-center gap-2 md:pb-8">
             <p className="text-[#222222] text-lg">Agust 29, 2026</p>
-            <p className="text-[#222222] text-lg">BALI, INDONESIA</p>
           </div>
         </FadeIn>
 
@@ -203,17 +274,18 @@ export default function InvitationView() {
               The Groom
             </p>
             <h2
-              className="text-[2.5rem] md:text-[3.5rem] text-[#222222] leading-tight font-bold"
-              style={{ fontFamily: "var(--font-parfumerie-script)" }}
+              className="text-[1.25rem] md:text-[1.75rem] text-[#222222] leading-tight font-bold"
+              style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}
             >
               Gusti Komang Bramanda Bagaskara S.Kom.
             </h2>
-            <p className="text-[#555555] text-base mt-4 leading-relaxed">
+            <br />
+            <p className="text-[#555555] text-sm mt-4 leading-relaxed">
               Putra ketiga dari pasangan
               <br />
               Bapak Gusti Putu Armada, Ak. dan Ibu Ketut Praba Wijayanti, S.T.
             </p>
-            <p className="text-[#888888] text-sm mt-2">
+            <p className="text-[#888888] text-xs mt-2">
               Dusun Seraya, Desa Baktiseraga, Kec. Buleleng, Buleleng
             </p>
           </FadeIn>
@@ -221,7 +293,7 @@ export default function InvitationView() {
           {/* Love symbol */}
           <FadeIn
             delay={0.2}
-            className="text-[2.5rem] md:text-[5rem] text-[#222222] shrink-0"
+            className="text-[7rem] text-[#222222] shrink-0"
             direction="none"
           >
             <div style={{ fontFamily: "var(--font-parfumerie-script)" }}>
@@ -248,17 +320,18 @@ export default function InvitationView() {
               The Bride
             </p>
             <h2
-              className="text-[2.5rem] md:text-[3.5rem] text-[#222222] leading-tight font-bold"
-              style={{ fontFamily: "var(--font-parfumerie-script)" }}
+              className="text-[1.25rem] md:text-[1.75rem] text-[#222222] leading-tight font-bold"
+              style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}
             >
               Ni Nyoman Parayoni Diastuti S.Kep.
             </h2>
-            <p className="text-[#555555] text-base mt-4 leading-relaxed">
+            <br />
+            <p className="text-[#555555] text-sm mt-4 leading-relaxed">
               Anak ketiga dari pasangan
               <br />
               Bapak I Ketut Nirpa, S.Pd.SD dan Ibu Ni Nyoman Kardi, S.Pd.
             </p>
-            <p className="text-[#888888] text-sm mt-2">
+            <p className="text-[#888888] text-xs mt-2">
               BD. Batulumbang, Desa Penuktukan, Kec. Tejakula, Buleleng
             </p>
           </FadeIn>
@@ -338,7 +411,7 @@ export default function InvitationView() {
         <FadeIn className="w-full max-w-4xl">
           <div className="rounded-2xl overflow-hidden border border-[#e0d9cc]">
             <iframe
-              src="https://maps.google.com/maps?q=-8.1276303,115.0776082&z=17&output=embed"
+              src="https://maps.google.com/maps?q=-8.1277204,115.0780722&z=19&output=embed"
               width="100%"
               height="400"
               style={{ border: 0 }}
@@ -418,7 +491,7 @@ export default function InvitationView() {
               <p className="text-xs text-[#888888] uppercase tracking-widest">
                 Bank
               </p>
-              <p className="text-[#222222] font-medium">BCA</p>
+              <p className="text-[#222222] font-medium">Seabank</p>
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-xs text-[#888888] uppercase tracking-widest">
@@ -426,9 +499,9 @@ export default function InvitationView() {
               </p>
               <div className="flex items-center justify-center">
                 <p className="text-[#222222] font-medium tracking-widest">
-                  1234567890
+                  901389697365
                 </p>
-                <CopyButton value="1234567890" />
+                <CopyButton value="901389697365" />
               </div>
             </div>
             <div className="flex flex-col gap-1">
@@ -455,7 +528,7 @@ export default function InvitationView() {
               <p className="text-xs text-[#888888] uppercase tracking-widest">
                 Bank
               </p>
-              <p className="text-[#222222] font-medium">BCA</p>
+              <p className="text-[#222222] font-medium">Seabank</p>
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-xs text-[#888888] uppercase tracking-widest">
@@ -463,9 +536,9 @@ export default function InvitationView() {
               </p>
               <div className="flex items-center justify-center">
                 <p className="text-[#222222] font-medium tracking-widest">
-                  0987654321
+                  901053544490
                 </p>
-                <CopyButton value="0987654321" />
+                <CopyButton value="901053544490" />
               </div>
             </div>
             <div className="flex flex-col gap-1">
@@ -494,7 +567,7 @@ export default function InvitationView() {
             </p>
             <p className="text-[#555555] text-sm">Postal Code: 81119</p>
             <a
-              href="https://www.google.com/maps/search/?api=1&query=Jalan+Laksamana+No.+89+Baktiseraga+Buleleng+Bali"
+              href="https://maps.app.goo.gl/Vsvq6vr2fGwivMZ96"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 inline-flex items-center gap-2 self-center px-4 py-2 rounded-full border border-[#e0d9cc] text-sm text-[#444444] hover:bg-[#f0ebe0] transition-colors"

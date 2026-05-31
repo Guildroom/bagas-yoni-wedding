@@ -30,9 +30,14 @@ function HomeContent() {
 
       {/* Content */}
       <main className="relative z-10 flex flex-col items-center justify-between text-center px-4 min-h-screen w-full py-16">
-        <h1 className="text-[4rem] sm:text-[4rem] md:text-[6rem] text-white drop-shadow-lg">
-          Bagas dan Yoni
-        </h1>
+        <div className="flex flex-col items-center gap-2">
+          <p className="text-xs tracking-[0.3em] uppercase text-white/80 drop-shadow">
+            Wedding Invitation
+          </p>
+          <h1 className="text-[4rem] sm:text-[4rem] md:text-[6rem] text-white drop-shadow-lg">
+            Bagas dan Yoni
+          </h1>
+        </div>
 
         <div className="flex flex-col items-center w-full">
           {/* White invitation name box */}

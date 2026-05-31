@@ -1,10 +1,11 @@
+import React from "react";
 import Image from "next/image";
 import FadeIn from "./FadeIn";
 
 interface Story {
   title: string;
   date: string;
-  text: string;
+  text: React.ReactNode;
 }
 
 const storiesLeft: Story[] = [
@@ -15,7 +16,7 @@ const storiesLeft: Story[] = [
   },
   {
     title: "Memulai Kisah",
-    date: "17 Juli 2020",
+    date: "17 Juli 2017",
     text: "Pada tanggal 17-07-17, kami memutuskan untuk melangkah bersama. Sebagai dua remaja yang masih merajut mimpi, kami belajar saling mendukung dan tumbuh menjadi pribadi yang lebih baik untuk satu sama lain.",
   },
   {
@@ -31,7 +32,18 @@ const storiesLeft: Story[] = [
   {
     title: "",
     date: "",
-    text: "Dari sebuah pertemuan yang tak terduga, kami belajar bahwa cinta bukan tentang menemukan seseorang yang sempurna, melainkan tentang tumbuh bersama menuju tujuan yang sama.",
+    text: (
+      <>
+        <em>
+          Dari sebuah pertemuan yang tak terduga, kami belajar bahwa cinta bukan
+          tentang menemukan seseorang yang sempurna, melainkan tentang tumbuh
+          bersama menuju tujuan yang sama.
+        </em>
+        <br />
+        <br />
+        _______ Bagas & Yoni _______
+      </>
+    ),
   },
 ];
 
@@ -78,7 +90,7 @@ export default function OurStory() {
                 {story.date}
               </p>
               <h3
-                className="text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] text-[#222222] leading-tight mb-3"
+                className="text-[2.5rem] sm:text-[2.9rem] md:text-[3.4rem] text-[#222222] leading-tight mb-3 font-bold"
                 style={{ fontFamily: "var(--font-parfumerie-script)" }}
               >
                 {story.title}
