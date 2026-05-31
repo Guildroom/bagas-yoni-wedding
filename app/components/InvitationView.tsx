@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Countdown from "./Countdown";
 import Wishes from "./Wishes";
@@ -5,11 +8,61 @@ import Gallery from "./Gallery";
 import FadeIn from "./FadeIn";
 import OurStory from "./OurStory";
 
+function CopyButton({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(value).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      aria-label="Copy account number"
+      className="ml-2 p-1 rounded hover:bg-[#f0ebe0] transition-colors text-[#888888] hover:text-[#444444]"
+    >
+      {copied ? (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      ) : (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
 export default function InvitationView() {
   return (
     <div className="bg-[#fbf7ee] font-sans">
       {/* Section 1 – title, hero photo, date & location */}
-      <section className="flex h-screen flex-col items-center justify-center text-center">
+      <section className="relative flex h-screen flex-col items-center justify-center text-center px-[10%] pt-[10%] pb-[12%]">
         <FadeIn delay={0.1}>
           <div className="mb-2">
             <h1 className="text-[4.5rem] sm:text-[7rem] md:text-[9rem] text-[#222222] mb-4">
@@ -23,15 +76,37 @@ export default function InvitationView() {
             alt="Bagas dan Yoni"
             width={900}
             height={600}
-            className="mb-8 w-[90%] max-w-3xl h-[220px] sm:h-[300px] md:h-[400px] object-cover object-[center_70%]"
+            className="mb-8 w-[70%] md:w-[50%] max-w-3xl h-[220px] sm:h-[200px] md:h-[300px] object-cover object-[center_70%]"
           />
         </FadeIn>
         <FadeIn delay={0.5}>
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2 md:pb-8">
             <p className="text-[#222222] text-lg">Agust 29, 2026</p>
             <p className="text-[#222222] text-lg">BALI, INDONESIA</p>
           </div>
         </FadeIn>
+
+        {/* Decorative frame overlay – mobile only */}
+        <div className="pointer-events-none absolute inset-0 sm:hidden">
+          <Image
+            src="/frame portrait.png"
+            alt=""
+            fill
+            className="object-fill"
+            style={{ mixBlendMode: "multiply" }}
+          />
+        </div>
+
+        {/* Decorative frame overlay – desktop only */}
+        <div className="pointer-events-none absolute inset-0 hidden sm:block">
+          <Image
+            src="/frame landscape.png"
+            alt=""
+            fill
+            className="object-fill"
+            style={{ mixBlendMode: "multiply" }}
+          />
+        </div>
       </section>
 
       {/* Section 2 – story section */}
@@ -54,21 +129,25 @@ export default function InvitationView() {
                 className="text-[3.5rem] sm:text-[5rem] md:text-[7rem] text-[#222222] mb-4 leading-tight"
                 style={{ fontFamily: "var(--font-parfumerie-script)" }}
               >
-                Bagas &amp; Yoni
+                Om Swastyastu
               </h2>
-              <p className="text-[#222222] text-xl leading-relaxed">
-                Write a paragraph that tells your story as a couple. You can
-                include details like how you met, your journey together, and
-                what makes your relationship unique. This is your chance to
-                share your personality and connect with your guests, giving them
-                a glimpse into your love story and what this special day means
-                to you.
+              <p className="text-[#222222] text-lg leading-relaxed italic">
+                "Ya Tuhanku Yang Maha Pengasih, Anugerahkanlah Kepada Pasangan
+                Ini Senantiasa Kebahagiaan, Kesehatan, Tetap Bersatu dan Tidak
+                Pernah Terpisahkan, Panjang Umur dan Tinggal Dirumah Yang Penuh
+                Kegembiraan Bersama Seluruh Keturunannya.”{" "}
+              </p>
+              <p
+                className="text-[#222222] text-lg leading-relaxed text-center"
+                style={{ marginTop: "24px" }}
+              >
+                _____ (Rgveda: X.85.42) ______
               </p>
             </div>
           </FadeIn>
 
           {/* Middle – portrait photo (always visible) */}
-          <FadeIn delay={0.15}>
+          <FadeIn delay={0.15} className="hidden md:flex flex-col">
             <Image
               src="/hero/alomoraphoto-28.jpg.jpeg"
               alt="Bagas dan Yoni"
@@ -91,9 +170,6 @@ export default function InvitationView() {
               height={300}
               className="w-full h-[260px] object-cover object-[center_30%] mb-3"
             />
-            <p className="text-[#222222] text-xl">
-              You can also write a photo caption here.
-            </p>
           </FadeIn>
         </div>
       </section>
@@ -102,10 +178,10 @@ export default function InvitationView() {
       <section className="bg-[#fbf7ee] px-4 md:px-8 py-16">
         <FadeIn>
           <h2
-            className="text-[2.5rem] md:text-[5rem] text-center text-[#222222] mb-16"
+            className="text-[3.5rem] md:text-[7rem] text-center text-[#222222] mb-16"
             style={{ fontFamily: "var(--font-parfumerie-script)" }}
           >
-            Meet the Groom &amp; Bride
+            Groom &amp; Bride
           </h2>
         </FadeIn>
         <div className="flex flex-col md:flex-row items-center justify-center gap-12 mx-auto">
@@ -127,11 +203,19 @@ export default function InvitationView() {
               The Groom
             </p>
             <h2
-              className="text-[2rem] md:text-[3.5rem] text-[#222222] leading-tight"
+              className="text-[2.5rem] md:text-[3.5rem] text-[#222222] leading-tight font-bold"
               style={{ fontFamily: "var(--font-parfumerie-script)" }}
             >
-              Gusti Komang Bramanda Bagaskara
+              Gusti Komang Bramanda Bagaskara S.Kom.
             </h2>
+            <p className="text-[#555555] text-base mt-4 leading-relaxed">
+              Putra ketiga dari pasangan
+              <br />
+              Bapak Gusti Putu Armada, Ak. dan Ibu Ketut Praba Wijayanti, S.T.
+            </p>
+            <p className="text-[#888888] text-sm mt-2">
+              Dusun Seraya, Desa Baktiseraga, Kec. Buleleng, Buleleng
+            </p>
           </FadeIn>
 
           {/* Love symbol */}
@@ -164,11 +248,19 @@ export default function InvitationView() {
               The Bride
             </p>
             <h2
-              className="text-[2rem] md:text-[3.5rem] text-[#222222] leading-tight"
+              className="text-[2.5rem] md:text-[3.5rem] text-[#222222] leading-tight font-bold"
               style={{ fontFamily: "var(--font-parfumerie-script)" }}
             >
-              Ni Nyoman Parayoni Diastuti
+              Ni Nyoman Parayoni Diastuti S.Kep.
             </h2>
+            <p className="text-[#555555] text-base mt-4 leading-relaxed">
+              Anak ketiga dari pasangan
+              <br />
+              Bapak I Ketut Nirpa, S.Pd.SD dan Ibu Ni Nyoman Kardi, S.Pd.
+            </p>
+            <p className="text-[#888888] text-sm mt-2">
+              BD. Batulumbang, Desa Penuktukan, Kec. Tejakula, Buleleng
+            </p>
           </FadeIn>
         </div>
       </section>
@@ -196,6 +288,9 @@ export default function InvitationView() {
             <p className="text-xs tracking-[0.3em] uppercase text-[#555555]">
               Save the Date
             </p>
+            <p className="text-[#222222] text-base tracking-wide">
+              Resepsi Pernikahan
+            </p>
             <h2
               className="text-[2.5rem] sm:text-[4rem] md:text-[5rem] text-[#222222] leading-tight"
               style={{ fontFamily: "var(--font-parfumerie-script)" }}
@@ -203,7 +298,7 @@ export default function InvitationView() {
               August 29, 2026
             </h2>
             <p className="text-[#555555] text-sm sm:text-base">
-              Saturday &mdash; 09:00 WITA
+              Saturday &mdash; 11.00 &ndash; 18.00 WITA
             </p>
           </FadeIn>
 
@@ -220,12 +315,14 @@ export default function InvitationView() {
               className="text-[2.5rem] sm:text-[4rem] md:text-[5rem] text-[#222222] leading-tight"
               style={{ fontFamily: "var(--font-parfumerie-script)" }}
             >
-              Tanah Lot
+              Baktiseraga
             </h2>
             <p className="text-[#555555] text-sm sm:text-base">
-              Jl. Tanah Lot, Beraban
+              Dusun Seraya, Desa Baktiseraga
             </p>
-            <p className="text-[#555555] text-sm">Tabanan, Bali, Indonesia</p>
+            <p className="text-[#555555] text-sm">
+              Kec. Buleleng, Buleleng, Bali
+            </p>
           </FadeIn>
         </div>
 
@@ -241,7 +338,7 @@ export default function InvitationView() {
         <FadeIn className="w-full max-w-4xl">
           <div className="rounded-2xl overflow-hidden border border-[#e0d9cc]">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.5!2d115.0867!3d-8.6215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23b6bc1c5b4e7%3A0x5030bfbca832d52!2sTanah%20Lot%20Temple!5e0!3m2!1sen!2sid!4v1"
+              src="https://maps.google.com/maps?q=-8.1276303,115.0776082&z=17&output=embed"
               width="100%"
               height="400"
               style={{ border: 0 }}
@@ -251,6 +348,7 @@ export default function InvitationView() {
               title="Wedding Venue"
             />
           </div>
+          z
         </FadeIn>
       </section>
 
@@ -326,9 +424,12 @@ export default function InvitationView() {
               <p className="text-xs text-[#888888] uppercase tracking-widest">
                 Account Number
               </p>
-              <p className="text-[#222222] font-medium tracking-widest">
-                1234567890
-              </p>
+              <div className="flex items-center justify-center">
+                <p className="text-[#222222] font-medium tracking-widest">
+                  1234567890
+                </p>
+                <CopyButton value="1234567890" />
+              </div>
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-xs text-[#888888] uppercase tracking-widest">
@@ -360,9 +461,12 @@ export default function InvitationView() {
               <p className="text-xs text-[#888888] uppercase tracking-widest">
                 Account Number
               </p>
-              <p className="text-[#222222] font-medium tracking-widest">
-                0987654321
-              </p>
+              <div className="flex items-center justify-center">
+                <p className="text-[#222222] font-medium tracking-widest">
+                  0987654321
+                </p>
+                <CopyButton value="0987654321" />
+              </div>
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-xs text-[#888888] uppercase tracking-widest">
@@ -374,6 +478,45 @@ export default function InvitationView() {
             </div>
           </FadeIn>
         </div>
+
+        {/* Direct gift address */}
+        <FadeIn>
+          <div className="w-full max-w-2xl border border-[#e0d9cc] rounded-2xl px-8 py-8 flex flex-col gap-3">
+            <p className="text-xs tracking-[0.3em] uppercase text-[#888888]">
+              Or Send Directly
+            </p>
+            <div className="w-8 border-t border-[#cccccc]" />
+            <p className="text-xs text-[#888888] uppercase tracking-widest">
+              Address
+            </p>
+            <p className="text-[#222222] font-medium leading-relaxed">
+              Jalan Laksamana No. 89, Baktiseraga, Buleleng, Buleleng, Bali
+            </p>
+            <p className="text-[#555555] text-sm">Postal Code: 81119</p>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Jalan+Laksamana+No.+89+Baktiseraga+Buleleng+Bali"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center gap-2 self-center px-4 py-2 rounded-full border border-[#e0d9cc] text-sm text-[#444444] hover:bg-[#f0ebe0] transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              Open in Google Maps
+            </a>
+          </div>
+        </FadeIn>
       </section>
 
       {/* Section 7 – Gallery */}
@@ -417,8 +560,22 @@ export default function InvitationView() {
                   Gusti Komang Bramanda Bagaskara
                 </p>
                 <p className="text-[#888888] text-sm">The Groom</p>
-                <p className="text-[#444444] text-sm mt-2">+62 812-0000-0001</p>
-                <p className="text-[#444444] text-sm">@bagaskara</p>
+                <a
+                  href="https://wa.me/6282235274223"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#444444] text-sm mt-2 hover:text-[#222222] underline-offset-2 hover:underline"
+                >
+                  +62 822-3527-4223
+                </a>
+                <a
+                  href="https://instagram.com/bramandabagaskara"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#444444] text-sm hover:text-[#222222] underline-offset-2 hover:underline"
+                >
+                  @bramandabagaskara
+                </a>
               </div>
             </FadeIn>
 
@@ -429,21 +586,73 @@ export default function InvitationView() {
                   Ni Nyoman Parayoni Diastuti
                 </p>
                 <p className="text-[#888888] text-sm">The Bride</p>
-                <p className="text-[#444444] text-sm mt-2">+62 812-0000-0002</p>
-                <p className="text-[#444444] text-sm">@parayoni</p>
+                <a
+                  href="https://wa.me/6285645241383"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#444444] text-sm mt-2 hover:text-[#222222] underline-offset-2 hover:underline"
+                >
+                  +62 856-4524-1383
+                </a>
+                <a
+                  href="https://instagram.com/parayoni_d"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#444444] text-sm hover:text-[#222222] underline-offset-2 hover:underline"
+                >
+                  @parayoni_d
+                </a>
               </div>
             </FadeIn>
           </div>
         </div>
 
         {/* Right – photo, full height */}
-        <div className="relative w-full md:w-[50%] min-h-screen md:min-h-0">
+        <div className="hidden md:block relative w-full md:w-[50%] min-h-screen md:min-h-0">
           <Image
             src="/hero/alomoraphoto-38.jpg.jpeg"
             alt="Bagas dan Yoni"
             fill
             className="object-cover object-[center_20%]"
           />
+        </div>
+      </section>
+
+      {/* Section 9 – Closing */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-8 py-24 overflow-hidden">
+        {/* Background photo */}
+        <Image
+          src="/hero/Alomoraphoto-31.jpg.jpeg"
+          alt="Bagas dan Yoni"
+          fill
+          className="object-cover object-[center_75%]"
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/60" />
+
+        {/* Content */}
+        <div className="relative z-10 flex flex-col items-center gap-8 max-w-lg">
+          <FadeIn>
+            <p className="text-white/90 text-base leading-relaxed">
+              Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila
+              Bapak/Ibu/Saudara/i berkenaan hadir untuk memberikan doa restu
+              kepada kami. Atas kehadirannya kami ucapkan terima kasih.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={0.25}>
+            <div className="flex flex-col items-center gap-3">
+              <p className="text-white/80 text-base italic">
+                Kami yang berbahagia,
+              </p>
+              <h2
+                className="text-[3rem] sm:text-[4rem] text-white leading-tight"
+                style={{ fontFamily: "var(--font-parfumerie-script)" }}
+              >
+                Bagas &amp; Yoni
+              </h2>
+            </div>
+          </FadeIn>
         </div>
       </section>
     </div>

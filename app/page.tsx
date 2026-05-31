@@ -30,7 +30,7 @@ function HomeContent() {
 
       {/* Content */}
       <main className="relative z-10 flex flex-col items-center justify-between text-center px-4 min-h-screen w-full py-16">
-        <h1 className="text-[2.5rem] sm:text-[4rem] md:text-[6rem] text-white drop-shadow-lg">
+        <h1 className="text-[4rem] sm:text-[4rem] md:text-[6rem] text-white drop-shadow-lg">
           Bagas dan Yoni
         </h1>
 
