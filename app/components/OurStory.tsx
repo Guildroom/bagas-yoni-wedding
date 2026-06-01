@@ -26,7 +26,7 @@ const storiesLeft: Story[] = [
   },
   {
     title: "Menuju Pelabuhan Hati",
-    date: "Agustus 2025",
+    date: "Agustus 2026",
     text: "Sembilan tahun berlalu penuh cerita, tawa, air mata, dan pelajaran berharga tentang memahami serta menerima satu sama lain. Dengan keyakinan yang semakin kuat, kami memutuskan melangkah ke babak baru kehidupan dan mengikat janji suci dalam pernikahan.",
   },
   {

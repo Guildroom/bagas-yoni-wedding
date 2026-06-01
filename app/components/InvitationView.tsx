@@ -323,7 +323,7 @@ export default function InvitationView() {
               className="text-[1.25rem] md:text-[1.75rem] text-[#222222] leading-tight font-bold"
               style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}
             >
-              Ni Nyoman Parayoni Diastuti S.Kep.
+              Ns. Ni Nyoman Parayoni Diastuti S.Kep.
             </h2>
             <br />
             <p className="text-[#555555] text-sm mt-4 leading-relaxed">
@@ -421,7 +421,6 @@ export default function InvitationView() {
               title="Wedding Venue"
             />
           </div>
-          z
         </FadeIn>
       </section>
 
