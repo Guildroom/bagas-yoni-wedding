@@ -125,8 +125,17 @@ export default function InvitationView() {
         )}
       </button>
       {/* Section 1 – title, hero photo, date & location */}
-      <section className="relative flex h-screen flex-col items-center justify-center text-center px-[10%] pt-[10%] pb-[12%]">
-        <FadeIn delay={0.1}>
+      <section className="relative flex h-screen flex-col items-center justify-start text-center px-[10%] pt-[10%] pb-[12%]">
+        <FadeIn delay={0.1} className="w-full flex justify-center">
+          <Image
+            src="/hero/alomoraphoto-36.jpg.jpeg"
+            alt="Bagas dan Yoni"
+            width={900}
+            height={600}
+            className="mb-4 w-[100%] md:w-[50%] max-w-3xl h-[400px] sm:h-[200px] md:h-[300px] object-cover object-[center_70%] rounded-tl-full rounded-tr-full sm:rounded-none"
+          />
+        </FadeIn>
+        <FadeIn delay={0.3}>
           <div className="mb-2">
             <p
               className="text-base tracking-widest text-[#888888] italic"
@@ -138,27 +147,18 @@ export default function InvitationView() {
               className="text-[4.5rem] sm:text-[5rem] md:text-[6rem] text-[#222222]"
               style={{ marginTop: "-0.75rem", lineHeight: 1.1 }}
             >
-              Bagas dan Yoni
+              Bagas & Yoni
             </h1>
           </div>
         </FadeIn>
-        <FadeIn delay={0.3} className="w-full flex justify-center">
-          <Image
-            src="/hero/alomoraphoto-36.jpg.jpeg"
-            alt="Bagas dan Yoni"
-            width={900}
-            height={600}
-            className="mb-8 w-[70%] md:w-[50%] max-w-3xl h-[220px] sm:h-[200px] md:h-[300px] object-cover object-[center_70%]"
-          />
-        </FadeIn>
         <FadeIn delay={0.5}>
           <div className="flex flex-col items-center gap-2 md:pb-8">
-            <p className="text-[#222222] text-lg">Agust 29, 2026</p>
+            <p className="text-[#222222] text-lg">August 29, 2026</p>
           </div>
         </FadeIn>
 
         {/* Decorative frame overlay – mobile only */}
-        <div className="pointer-events-none absolute inset-0 sm:hidden">
+        <div className="pointer-events-none absolute inset-0 sm:hidden z-10">
           <Image
             src="/frame portrait.png"
             alt=""
@@ -169,7 +169,7 @@ export default function InvitationView() {
         </div>
 
         {/* Decorative frame overlay – desktop only */}
-        <div className="pointer-events-none absolute inset-0 hidden sm:block">
+        <div className="pointer-events-none absolute inset-0 hidden sm:block z-10">
           <Image
             src="/frame landscape.png"
             alt=""
