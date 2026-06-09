@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Countdown from "./Countdown";
 import Wishes from "./Wishes";
@@ -61,6 +62,8 @@ function CopyButton({ value }: { value: string }) {
 export default function InvitationView() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const searchParams = useSearchParams();
+  const showGift = searchParams.get("gift") === "true";
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -457,7 +460,7 @@ export default function InvitationView() {
       </section>
 
       {/* Section 6 – Gift */}
-      <section className="bg-[#fbf7ee] px-6 py-20 flex flex-col items-center gap-12">
+      {showGift && <section className="bg-[#fbf7ee] px-6 py-20 flex flex-col items-center gap-12">
         <FadeIn>
           <div className="flex flex-col items-center gap-3 text-center">
             <p className="text-xs tracking-[0.3em] uppercase text-[#555555]">
@@ -589,7 +592,7 @@ export default function InvitationView() {
             </a>
           </div>
         </FadeIn>
-      </section>
+      </section>}
 
       {/* Section 7 – Gallery */}
       <section className="bg-[#fbf7ee] py-20 flex flex-col items-center gap-10 overflow-hidden">

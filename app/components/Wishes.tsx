@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Wish {
-  id: number;
+  id: string;
   name: string;
   message: string;
-  timestamp: Date;
+  timestamp: string;
 }
 
 export default function Wishes() {
@@ -14,23 +14,37 @@ export default function Wishes() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  useEffect(() => {
+    fetch("/api/wishes")
+      .then((res) => res.json())
+      .then((data) => setWishes(Array.isArray(data) ? data : []))
+      .finally(() => setLoading(false));
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim() || !message.trim()) return;
-    setWishes((prev) => [
-      {
-        id: Date.now(),
-        name: name.trim(),
-        message: message.trim(),
-        timestamp: new Date(),
-      },
-      ...prev,
-    ]);
-    setName("");
-    setMessage("");
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/wishes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), message: message.trim() }),
+      });
+      if (res.ok) {
+        const newWish: Wish = await res.json();
+        setWishes((prev) => [newWish, ...prev]);
+        setName("");
+        setMessage("");
+        setSubmitted(true);
+        setTimeout(() => setSubmitted(false), 3000);
+      }
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -56,10 +70,10 @@ export default function Wishes() {
         <div className="flex items-center gap-3">
           <button
             type="submit"
-            disabled={!name.trim() || !message.trim()}
+            disabled={!name.trim() || !message.trim() || submitting}
             className="px-6 py-2 bg-white text-[#222222] text-xs tracking-widest uppercase rounded-full hover:bg-white/80 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
-            Send Wishes
+            {submitting ? "Sending…" : "Send Wishes"}
           </button>
           {submitted && (
             <p className="text-xs text-white/70 italic">Thank you! 🤍</p>
@@ -80,7 +94,11 @@ export default function Wishes() {
         </div>
 
         <div className="max-h-72 overflow-y-auto flex flex-col gap-4 pr-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb:hover]:bg-white/50">
-          {wishes.length === 0 ? (
+          {loading ? (
+            <p className="text-center text-white/40 italic text-xs py-4">
+              Loading wishes…
+            </p>
+          ) : wishes.length === 0 ? (
             <p className="text-center text-white/40 italic text-xs py-4">
               Be the first to leave a wish 🤍
             </p>
@@ -92,7 +110,7 @@ export default function Wishes() {
                     {wish.name}
                   </p>
                   <p className="text-xs text-white/50">
-                    {wish.timestamp.toLocaleTimeString([], {
+                    {new Date(wish.timestamp).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
