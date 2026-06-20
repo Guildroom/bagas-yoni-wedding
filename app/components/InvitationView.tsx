@@ -63,7 +63,16 @@ export default function InvitationView() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const searchParams = useSearchParams();
-  const showGift = searchParams.get("gift") === "true";
+  const showGift = searchParams.get("fullinvitation") === "true";
+  const session = searchParams.get("session");
+  const sessionTime =
+    session === "1"
+      ? "11.00 \u2013 13.00"
+      : session === "2"
+        ? "13.00 \u2013 15.00"
+        : session === "3"
+          ? "15.00 \u2013 17.00"
+          : "11.00 \u2013 17.00";
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -374,7 +383,7 @@ export default function InvitationView() {
               August 29, 2026
             </h2>
             <p className="text-[#555555] text-sm sm:text-base">
-              Saturday &mdash; 11.00 &ndash; 18.00 WITA
+              Saturday &mdash; {sessionTime} WITA
             </p>
           </FadeIn>
 
@@ -460,139 +469,141 @@ export default function InvitationView() {
       </section>
 
       {/* Section 6 – Gift */}
-      {showGift && <section className="bg-[#fbf7ee] px-6 py-20 flex flex-col items-center gap-12">
-        <FadeIn>
-          <div className="flex flex-col items-center gap-3 text-center">
-            <p className="text-xs tracking-[0.3em] uppercase text-[#555555]">
-              Wedding Gift
-            </p>
-            <h2
-              className="text-[2.5rem] sm:text-[4rem] md:text-[5rem] text-[#222222] leading-tight"
-              style={{ fontFamily: "var(--font-parfumerie-script)" }}
-            >
-              Send a Gift
-            </h2>
-            <p className="text-[#555555] text-sm max-w-sm">
-              Your presence is the greatest gift of all. But if you wish to
-              bless us further, you may send a gift via bank transfer below.
-            </p>
-          </div>
-        </FadeIn>
-
-        <div className="flex flex-col sm:flex-row gap-6 w-full max-w-2xl">
-          {/* Groom's account */}
-          <FadeIn
-            direction="right"
-            className="flex-1 border border-[#e0d9cc] rounded-2xl px-8 py-8 flex flex-col gap-4"
-          >
-            <p className="text-xs tracking-[0.3em] uppercase text-[#888888]">
-              Groom
-            </p>
-            <div className="w-8 border-t border-[#cccccc]" />
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-[#888888] uppercase tracking-widest">
-                Bank
+      {showGift && (
+        <section className="bg-[#fbf7ee] px-6 py-20 flex flex-col items-center gap-12">
+          <FadeIn>
+            <div className="flex flex-col items-center gap-3 text-center">
+              <p className="text-xs tracking-[0.3em] uppercase text-[#555555]">
+                Wedding Gift
               </p>
-              <p className="text-[#222222] font-medium">Seabank</p>
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-[#888888] uppercase tracking-widest">
-                Account Number
-              </p>
-              <div className="flex items-center justify-center">
-                <p className="text-[#222222] font-medium tracking-widest">
-                  901389697365
-                </p>
-                <CopyButton value="901389697365" />
-              </div>
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-[#888888] uppercase tracking-widest">
-                Account Name
-              </p>
-              <p className="text-[#222222] font-medium">
-                Gusti Komang Bramanda Bagaskara
-              </p>
-            </div>
-          </FadeIn>
-
-          {/* Bride's account */}
-          <FadeIn
-            direction="left"
-            delay={0.15}
-            className="flex-1 border border-[#e0d9cc] rounded-2xl px-8 py-8 flex flex-col gap-4"
-          >
-            <p className="text-xs tracking-[0.3em] uppercase text-[#888888]">
-              Bride
-            </p>
-            <div className="w-8 border-t border-[#cccccc]" />
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-[#888888] uppercase tracking-widest">
-                Bank
-              </p>
-              <p className="text-[#222222] font-medium">Seabank</p>
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-[#888888] uppercase tracking-widest">
-                Account Number
-              </p>
-              <div className="flex items-center justify-center">
-                <p className="text-[#222222] font-medium tracking-widest">
-                  901053544490
-                </p>
-                <CopyButton value="901053544490" />
-              </div>
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-[#888888] uppercase tracking-widest">
-                Account Name
-              </p>
-              <p className="text-[#222222] font-medium">
-                Ni Nyoman Parayoni Diastuti
-              </p>
-            </div>
-          </FadeIn>
-        </div>
-
-        {/* Direct gift address */}
-        <FadeIn>
-          <div className="w-full max-w-2xl border border-[#e0d9cc] rounded-2xl px-8 py-8 flex flex-col gap-3">
-            <p className="text-xs tracking-[0.3em] uppercase text-[#888888]">
-              Or Send Directly
-            </p>
-            <div className="w-8 border-t border-[#cccccc]" />
-            <p className="text-xs text-[#888888] uppercase tracking-widest">
-              Address
-            </p>
-            <p className="text-[#222222] font-medium leading-relaxed">
-              Jalan Laksamana No. 89, Baktiseraga, Buleleng, Buleleng, Bali
-            </p>
-            <p className="text-[#555555] text-sm">Postal Code: 81119</p>
-            <a
-              href="https://maps.app.goo.gl/Vsvq6vr2fGwivMZ96"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-2 self-center px-4 py-2 rounded-full border border-[#e0d9cc] text-sm text-[#444444] hover:bg-[#f0ebe0] transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+              <h2
+                className="text-[2.5rem] sm:text-[4rem] md:text-[5rem] text-[#222222] leading-tight"
+                style={{ fontFamily: "var(--font-parfumerie-script)" }}
               >
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              Open in Google Maps
-            </a>
+                Send a Gift
+              </h2>
+              <p className="text-[#555555] text-sm max-w-sm">
+                Your presence is the greatest gift of all. But if you wish to
+                bless us further, you may send a gift via bank transfer below.
+              </p>
+            </div>
+          </FadeIn>
+
+          <div className="flex flex-col sm:flex-row gap-6 w-full max-w-2xl">
+            {/* Groom's account */}
+            <FadeIn
+              direction="right"
+              className="flex-1 border border-[#e0d9cc] rounded-2xl px-8 py-8 flex flex-col gap-4"
+            >
+              <p className="text-xs tracking-[0.3em] uppercase text-[#888888]">
+                Groom
+              </p>
+              <div className="w-8 border-t border-[#cccccc]" />
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-[#888888] uppercase tracking-widest">
+                  Bank
+                </p>
+                <p className="text-[#222222] font-medium">Seabank</p>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-[#888888] uppercase tracking-widest">
+                  Account Number
+                </p>
+                <div className="flex items-center justify-center">
+                  <p className="text-[#222222] font-medium tracking-widest">
+                    901389697365
+                  </p>
+                  <CopyButton value="901389697365" />
+                </div>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-[#888888] uppercase tracking-widest">
+                  Account Name
+                </p>
+                <p className="text-[#222222] font-medium">
+                  Gusti Komang Bramanda Bagaskara
+                </p>
+              </div>
+            </FadeIn>
+
+            {/* Bride's account */}
+            <FadeIn
+              direction="left"
+              delay={0.15}
+              className="flex-1 border border-[#e0d9cc] rounded-2xl px-8 py-8 flex flex-col gap-4"
+            >
+              <p className="text-xs tracking-[0.3em] uppercase text-[#888888]">
+                Bride
+              </p>
+              <div className="w-8 border-t border-[#cccccc]" />
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-[#888888] uppercase tracking-widest">
+                  Bank
+                </p>
+                <p className="text-[#222222] font-medium">Seabank</p>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-[#888888] uppercase tracking-widest">
+                  Account Number
+                </p>
+                <div className="flex items-center justify-center">
+                  <p className="text-[#222222] font-medium tracking-widest">
+                    901053544490
+                  </p>
+                  <CopyButton value="901053544490" />
+                </div>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-[#888888] uppercase tracking-widest">
+                  Account Name
+                </p>
+                <p className="text-[#222222] font-medium">
+                  Ni Nyoman Parayoni Diastuti
+                </p>
+              </div>
+            </FadeIn>
           </div>
-        </FadeIn>
-      </section>}
+
+          {/* Direct gift address */}
+          <FadeIn>
+            <div className="w-full max-w-2xl border border-[#e0d9cc] rounded-2xl px-8 py-8 flex flex-col gap-3">
+              <p className="text-xs tracking-[0.3em] uppercase text-[#888888]">
+                Or Send Directly
+              </p>
+              <div className="w-8 border-t border-[#cccccc]" />
+              <p className="text-xs text-[#888888] uppercase tracking-widest">
+                Address
+              </p>
+              <p className="text-[#222222] font-medium leading-relaxed">
+                Jalan Laksamana No. 89, Baktiseraga, Buleleng, Buleleng, Bali
+              </p>
+              <p className="text-[#555555] text-sm">Postal Code: 81119</p>
+              <a
+                href="https://maps.app.goo.gl/Vsvq6vr2fGwivMZ96"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex items-center gap-2 self-center px-4 py-2 rounded-full border border-[#e0d9cc] text-sm text-[#444444] hover:bg-[#f0ebe0] transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                Open in Google Maps
+              </a>
+            </div>
+          </FadeIn>
+        </section>
+      )}
 
       {/* Section 7 – Gallery */}
       <section className="bg-[#fbf7ee] py-20 flex flex-col items-center gap-10 overflow-hidden">
@@ -816,7 +827,7 @@ export default function InvitationView() {
                 className="text-[3rem] sm:text-[4rem] text-white leading-tight"
                 style={{ fontFamily: "var(--font-parfumerie-script)" }}
               >
-                Bagas &amp; Yoni
+                Keluarga Gusti Putu Armada &amp; Keluarga I Ketut Nirpa
               </h2>
             </div>
           </FadeIn>
