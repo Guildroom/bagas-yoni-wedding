@@ -824,7 +824,7 @@ export default function InvitationView() {
                 Kami yang berbahagia,
               </p>
               <h2
-                className="text-[3rem] sm:text-[4rem] text-white leading-tight"
+                className="text-[1.5rem] sm:text-[3rem] text-white leading-tight"
                 style={{ fontFamily: "var(--font-parfumerie-script)" }}
               >
                 Keluarga Gusti Putu Armada &amp; Keluarga I Ketut Nirpa

@@ -11,7 +11,7 @@ interface Story {
 const storiesLeft: Story[] = [
   {
     title: "Awal Pertemuan",
-    date: "Juli 2017",
+    date: "Juni 2017",
     text: "Pertemuan kami bermula di Gunung Batur saat masih duduk di bangku SMA. Dalam perjalanan mendaki yang sederhana, kami saling mengenal tanpa pernah menyangka bahwa takdir sedang menuliskan kisah indah untuk masa depan kami.",
   },
   {
