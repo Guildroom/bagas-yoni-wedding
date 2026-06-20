@@ -20,7 +20,6 @@ const images = [
   "/hero/Alomoraphoto-31.jpg.jpeg",
   "/hero/alomoraphoto-34.jpg.jpeg",
   "/hero/alomoraphoto-36.jpg.jpeg",
-  "/hero/Alomoraphoto-37.jpg.jpeg",
   "/hero/alomoraphoto-38.jpg.jpeg",
   "/hero/Alomoraphoto-47.jpg.jpeg",
   "/hero/Alomoraphoto-48.jpg.jpeg",
