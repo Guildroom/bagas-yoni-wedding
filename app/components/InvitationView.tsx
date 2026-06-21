@@ -824,10 +824,12 @@ export default function InvitationView() {
                 Kami yang berbahagia,
               </p>
               <h2
-                className="text-[1.5rem] sm:text-[3rem] text-white leading-tight"
+                className="text-[2rem] sm:text-[3rem] text-white leading-tight"
                 style={{ fontFamily: "var(--font-parfumerie-script)" }}
               >
-                Keluarga Gusti Putu Armada &amp; Keluarga I Ketut Nirpa
+                <p>Keluarga Gusti Putu Armada</p>
+                <p>&amp;</p>
+                <p>Keluarga I Ketut Nirpa</p>
               </h2>
             </div>
           </FadeIn>
