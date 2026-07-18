@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Countdown from "./Countdown";
 import Wishes from "./Wishes";
@@ -63,8 +63,14 @@ export default function InvitationView() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const searchParams = useSearchParams();
-  const showGift = searchParams.get("fullinvitation") === "true";
-  const session = searchParams.get("session");
+  const params = useParams<{ [key: string]: string | string[] | undefined }>();
+  const routeFullInvitation = params.fullinvitation;
+  const routeSession = params.session;
+  const queryFullInvitation = searchParams.get("fullinvitation");
+  const querySession = searchParams.get("session");
+  const showGift =
+    routeFullInvitation === "1" || queryFullInvitation === "true";
+  const session = routeSession ?? querySession;
   const sessionTime =
     session === "1"
       ? "11.00 \u2013 13.00"
